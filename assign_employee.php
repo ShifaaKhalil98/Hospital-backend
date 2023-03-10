@@ -28,7 +28,7 @@ if($num_employees>0){
     $num_rows=$check->num_rows();
 
     if($num_rows>0){
-        $response['status']='employee already exists';
+        $response['status']='employee already exists in this hospital';
     }else{
        $add_employee=$mysqli->prepare('insert into hospital_users(hospital_id,user_id) values(?,?);');
        $add_employee->bind_param("ii",$hospital_id,$employee_id);

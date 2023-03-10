@@ -1,4 +1,5 @@
 <?php
+session_start();
 header('Access-Control-Allow-Origin: *');
 include('connection.php');
 
@@ -14,7 +15,10 @@ $query->bind_result($id,$name,$email,$hashed_password,$dob,$usertype_id);
 $query->fetch();
 
 if($num_rows>0){
-if($password==$hashed_password){
+if(password_verify($password,$hashed_password)){
+    $_SESSION['logged_in']=true;
+    $_SESSION['user_id']=$id;
+    $_SESSION['usertype_id']=$usertype_id;
     $response['status']="logged in successfully";
     echo json_encode($response);
 }
