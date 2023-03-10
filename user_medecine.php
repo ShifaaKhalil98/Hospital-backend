@@ -6,13 +6,16 @@ include('connection.php');
 $medication_name=$_POST['medication_name'];
 $quantity=$_POST['quantity'];
 $user_id=$_SESSION['user_id'];
+$usertype_id=1;
 
-$result_hospital=$mysqli->prepare('select hospital_id from hospital_users where user_id=?');
-$result_hospital->bind_param('s',$user_id);
+$result_hospital=$mysqli->prepare('select hospital_id from hospital_users where user_id=? and usertype_id=?');
+$result_hospital->bind_param('ii',$user_id,$usertype_id);
 $result_hospital->execute();
 $result_hospital->store_result();
 $num_rows=$result_hospital->num_rows();
 if($num_rows>0){
+    $result_hospital->bind_result($hospital_id);
+    $result_hospital->fetch();
 
     $result_medication=$mysqli->prepare('select id from medications where name=?');
     $result_medication->bind_param('s',$medication_name);
