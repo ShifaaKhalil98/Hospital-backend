@@ -4,10 +4,9 @@ include('connection.php');
 
 $email=$_POST['email'];
 $password=$_POST['password'];
-$first_name=$_POST['first_name'];
-$last_name=$_POST['last_name'];
+$name=$_POST['name'];
 $dob=$_POST['dob'];
-$usertype_id=$_POST['usertype_id'];
+$usertype_id=1;
 $phone_number=$_POST['phone_number'];
 
 $check=$mysqli->prepare('select email from users where email=?');
@@ -21,7 +20,6 @@ if($num_rows>0){
     echo json_encode($response);
 }else{
     if(strlen($password)>=8 && preg_match('/[A-Z]/', $password) && preg_match('/[a-z]/', $password) && preg_match('/\d/',$password) && preg_match('/[!@#$%^&*()\-_=+{};:,<.>]/',$password)){
-        $name=$first_name." ".$last_name;
         $hashed_password=password_hash($password, PASSWORD_BCRYPT);
         $query=$mysqli->prepare('insert into users(name,email,password,dob,usertype_id,phone_number) values(?,?,?,?,?,?)');
         $query->bind_param('ssssii',$name,$email,$hashed_password, $dob, $usertype_id,$phone_number);
@@ -30,7 +28,7 @@ if($num_rows>0){
     }
     else{
         $response['status']='password is not valid';
-        echo json_encode($response);
     }
+    echo json_encode($response);
 }
 ?>

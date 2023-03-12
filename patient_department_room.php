@@ -6,9 +6,10 @@ include('connection.php');
 $department_name=$_POST['department_name'];
 $room_number=$_POST['room_number'];
 $user_id=$_SESSION['user_id'];
+$usertype_id=1;
 
-$result_hospital=$mysqli->prepare('select hospital_id from hospital_users where user_id=?');
-$result_hospital->bind_param('s',$user_id);
+$result_hospital=$mysqli->prepare('select hospital_id from hospital_users where user_id=? and usertype_id=?');
+$result_hospital->bind_param('si',$user_id,$usertype_id);
 $result_hospital->execute();
 $result_hospital->store_result();
 $num_rows=$result_hospital->num_rows();

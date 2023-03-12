@@ -15,15 +15,15 @@ $result->store_result();
 $num_rows=$result->num_rows();
 if($num_rows>0){
 
-    $result_department=$mysqli->prepare('update user_info set blood_type=?, bank_account=? where user_id=?');
-    $result_department->bind_param('ssi',$blood_type,$bank_account,$user_id);
-    $result_department->execute();
-    $result_department->store_result();
+    $result=$mysqli->prepare('update patients_info set blood_type=?, bank_account=? where user_id=?');
+    $result->bind_param('ssi',$blood_type,$bank_account,$user_id);
+    $result->execute();
+    $result->store_result();
     
     $response['status']='updated successfully';
     }
 else{
-    $response['status']='account';
+    $response['status']='no account';
 }
 echo json_encode($response);
 ?>

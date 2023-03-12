@@ -18,17 +18,16 @@ if($num_rows>0){
 if(password_verify($password,$hashed_password)){
     $_SESSION['logged_in']=true;
     $_SESSION['user_id']=$id;
+    $_SESSION['name']=$name;
     $_SESSION['usertype_id']=$usertype_id;
     $response['status']="logged in successfully";
-    echo json_encode($response);
 }
 else{
     $response['status']="password is incorrect";
-    echo json_encode($response);
 }
 }
 else{
     $response['status']="user does not exist";
-    echo json_encode($response);
 }
+echo json_encode($response);
 ?>
